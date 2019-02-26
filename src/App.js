@@ -8,17 +8,24 @@ class App extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      data: {}
+      data: {},
+      searchText: ''
     }
   }
+
   render() {
     return (
       <div className="App">
-       <Header />
-       <List />
+       <Header searchText={this.state.searchText} handleSearchText={this.handleSearchText}/>
+       <List data={this.state.data} searchText={this.state.searchText}/>
       </div>
     );
   }
+
+  handleSearchText = (value) => {
+    this.setState({searchText: value});
+  }
+
   componentDidMount () {
     let allPokemons = [];
     fetch('https://pokeapi.co/api/v2/pokemon')
