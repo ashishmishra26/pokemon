@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import capitalize from '../lib/Capitalize'
 
 export default class Card extends Component {
     constructor(props){
@@ -16,9 +17,10 @@ export default class Card extends Component {
       table = this.createTable(content);
 
       return (
-        <div className={this.state.clicked ? 'card-container' : 'card-container-small'} onClick={()=>{this.handleClick(this.state.clicked)}}>
+        <div className={this.state.clicked ? 'card-container' : 'card-container-small'}>
           <div className={this.state.clicked ? 'card-header' : 'card-header-small'}>
-              <p>{name}</p>
+              <p>{capitalize(name)}</p>
+              <p className="expand-icon" onClick={()=>{this.handleClick(this.state.clicked)}}> {this.state.clicked ? '-' : '+'}</p>
           </div>
           <div className={this.state.clicked ? 'card-content' : 'card-content-small'}>
             <div className={this.state.clicked ? 'data-table' : 'data-table-hidden'}>{table}</div>
@@ -34,35 +36,46 @@ export default class Card extends Component {
   }
 
   createTable (content) {
-    let table = [], ability = [];
+    let table = [], ability = [], moves = [];
     if (Object.keys(content).length) {
       table.push(
-        <>
-          <h4>weight</h4>
-          <h5>{content.weight}</h5>
-        </>
+        <React.Fragment key={content.name+content.weight}>
+          <h4>Weight</h4>
+          <h5 key={content.name+content.weight}>{content.weight}</h5>
+        </React.Fragment>
       );
       table.push(
-        <>
-          <h4>height</h4>
-          <h5>{content.height}</h5>
-        </>
+        <React.Fragment key={content.name+content.height}>
+          <h4>Height</h4>
+          <h5 key={content.name+content.height}>{content.height}</h5>
+        </React.Fragment>
       );
       table.push(
-        <>
-          <h4>experience</h4>
-          <h5>{content.base_experience}</h5>
-        </>
+        <React.Fragment key={content.name+content.base_experience}>
+          <h4>Experience</h4>
+          <h5 key={content.name+content.base_experience}>{content.base_experience}</h5>
+        </React.Fragment>
       );
 
       content.abilities.forEach(abil => {
-        ability.push(<h5>{abil.ability.name}</h5>);
+        ability.push(<h5 key={content.name+abil.ability.name}>{abil.ability.name}</h5>);
       });
 
       table.push(
         <>
-          <h4>ability</h4>
+          <h4>Abilities</h4>
           {ability}
+        </>
+      );
+
+      content.moves.forEach(move => {
+        moves.push(<h5 key={content.name+move.move.name}>{move.move.name}</h5>);
+      });
+
+      table.push(
+        <>
+          <h4>Moves</h4>
+          {moves}
         </>
       );
     }

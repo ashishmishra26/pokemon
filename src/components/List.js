@@ -8,7 +8,7 @@ export default class List extends Component {
 
       if (Object.keys(data).length) {
         data.forEach(pokemon => {
-          if (pokemon.name.toLowerCase().indexOf(searchText) !== -1) {
+          if (pokemon.name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1) {
             pokemons.push(<Card key={pokemon.name} name={pokemon.name} url={pokemon.url}/>)
           } 
         });
