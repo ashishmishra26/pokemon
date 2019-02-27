@@ -36,9 +36,9 @@ class App extends Component {
         while (response.next) {
           response = await fetch(response.next).then(response => response.json());
           response && (allPokemons = [...allPokemons, ...response.results]);
+          this.setState({data: allPokemons});
         }
       }
-      this.setState({data: allPokemons});
     })
   }
 }

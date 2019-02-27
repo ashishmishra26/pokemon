@@ -45,7 +45,7 @@ export default class Card extends Component {
         </React.Fragment>
       );
       table.push(
-        <React.Fragment key={content.name+content.height}>
+        <React.Fragment key={content.weight+content.height}>
           <h4>Height</h4>
           <h5 key={content.name+content.height}>{content.height}</h5>
         </React.Fragment>
